@@ -1,0 +1,94 @@
+rules:
+  - column: City
+    dimension: COMPLETENESS
+    name: non-null
+    description: Sample rule for non-null column
+    non_null_expectation: {}
+    threshold: 1.0
+  - column: City
+    dimension: UNIQUENESS
+    threshold: 0.0
+    uniqueness_expectation: {}
+  - column: City
+    dimension: VALIDITY
+    row_condition_expectation:
+      sql_expression: (LENGTH(`City`) >= 7 AND LENGTH(`City`) <= 19) OR `City` IS NULL
+    threshold: 1.0
+  - column: Company
+    dimension: COMPLETENESS
+    non_null_expectation: {}
+    threshold: 1.0
+  - column: Company
+    dimension: VALIDITY
+    row_condition_expectation:
+      sql_expression: (LENGTH(`Company`) >= 8 AND LENGTH(`Company`) <= 31) OR `Company` IS NULL
+    threshold: 1.0
+  - column: Country
+    dimension: COMPLETENESS
+    non_null_expectation: {}
+    threshold: 1.0
+  - column: Country
+    dimension: VALIDITY
+    row_condition_expectation:
+      sql_expression: (LENGTH(`Country`) >= 4 AND LENGTH(`Country`) <= 44) OR `Country` IS NULL
+    threshold: 1.0
+  - column: Customer Id
+    dimension: COMPLETENESS
+    non_null_expectation: {}
+    threshold: 1.0
+  - column: Customer Id
+    dimension: UNIQUENESS
+    threshold: 0.0
+    uniqueness_expectation: {}
+  - column: Email
+    dimension: COMPLETENESS
+    non_null_expectation: {}
+    threshold: 1.0
+  - column: Email
+    dimension: UNIQUENESS
+    threshold: 0.0
+    uniqueness_expectation: {}
+  - column: First Name
+    dimension: COMPLETENESS
+    non_null_expectation: {}
+    threshold: 1.0
+  - column: First Name
+    dimension: VALIDITY
+    row_condition_expectation:
+      sql_expression: (LENGTH(`First Name`) >= 3 AND LENGTH(`First Name`) <= 10) OR `First Name` IS NULL
+    threshold: 1.0
+  - column: Index
+    dimension: COMPLETENESS
+    non_null_expectation: {}
+    threshold: 1.0
+  - column: Index
+    dimension: UNIQUENESS
+    threshold: 0.0
+    uniqueness_expectation: {}
+  - column: Last Name
+    dimension: COMPLETENESS
+    non_null_expectation: {}
+    threshold: 1.0
+  - column: Last Name
+    dimension: VALIDITY
+    row_condition_expectation:
+      sql_expression: (LENGTH(`Last Name`) >= 3 AND LENGTH(`Last Name`) <= 11) OR `Last Name` IS NULL
+    threshold: 1.0
+  - column: Phone 1
+    dimension: COMPLETENESS
+    non_null_expectation: {}
+    threshold: 1.0
+  - column: Phone 2
+    dimension: COMPLETENESS
+    non_null_expectation: {}
+    threshold: 1.0
+#  - column: Subscription Date
+#    dimension: COMPLETENESS
+#    non_null_expectation: {}
+#    threshold: 1.0
+
+sampling_percent: 100.0
+
+post_scan_actions:
+  bigquery_export:
+    results_table: "projects/burner-jubsharm/datasets/raw_dataset/tables/raw_customer_onboarding_quality_scan"
