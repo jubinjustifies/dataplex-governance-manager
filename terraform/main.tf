@@ -1,3 +1,23 @@
+resource "google_pubsub_topic" "scan_alerts_topic" {
+  name    = "dataplex-scan-alerts"
+  project = "burner-jubsharm"
+}
+
+resource "google_pubsub_subscription" "scan_alerts_subscription" {
+  name  = "dataplex-scan-alerts-sub"
+  topic = google_pubsub_topic.scan_alerts_topic.id
+  project = "burner-jubsharm"
+
+  ack_deadline_seconds = 20
+}
+
+
+resource "google_pubsub_topic_iam_member" "monitoring_publisher" {
+  topic  = google_pubsub_topic.scan_alerts_topic.name
+  role   = "roles/pubsub.publisher"
+  member = "serviceAccount:service-646776580204@gcp-sa-monitoring-notification.iam.gserviceaccount.com"
+}
+
 
 resource "google_logging_metric" "dataplex_scan_failures" {
   count       = 1
@@ -52,7 +72,7 @@ module "data_quality_scan" {
 //  execution_schedule = "0 2 * * *" # Daily at 2:00 AM
   enable_alerting    = true
   alert_email        = "jubin.sharma@gmail.com"
-
+  alert_topic        = "dataplex-scan-alerts"
 }
 
 
@@ -88,4 +108,5 @@ module "data_profile_scan" {
 //  execution_schedule = "0 2 * * *" # Daily at 2:00 AM
   enable_alerting    = true
   alert_email        = "jubin.sharma@gmail.com"
+  alert_topic        = "dataplex-scan-alerts"
 }

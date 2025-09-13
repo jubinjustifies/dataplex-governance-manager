@@ -153,3 +153,9 @@ variable "alert_email" {
   type        = string
   default     = null
 }
+
+variable "alert_topic" {
+  description = "PubSub Topic to receive alerts for Dataplex scan failures."
+  type        = string
+  default     = null
+}
