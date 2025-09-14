@@ -1,5 +1,43 @@
 # Dataplex DataScan
 
+
+Google APIs enabled for the PoC:
+
+BigQuery API
+Cloud Dataplex API
+Identity and Access Management API
+Cloud Logging API
+Cloud Pub/Sub API
+
+
+List of GCP resources used in the PoC:
+
+BigQuery Dataset & Table – The data source to scan.
+Dataplex DataScan – The actual DQ scan configuration.
+Pub/Sub Topic & Subscription – For alerting on scan failures.
+Notification Channels - Email and PubSub channels for alert notifications.
+Logging Metric – To track scan failure events.
+IAM Roles – To allow Dataplex to access BigQuery and publish alerts.
+Logging Alert Policy - To scan dataplex failed events metric and send to alert channels.
+
+
+Roles required by user/service account to provision GCP resources:
+
+
+
+Step by Step process to complete the PoC:
+
+Create a BigQuery Dataset and Table to store the actual data that needs to be DQ scanned.
+Create Datascan with Data Quality rules specific to the data in the BQ table.
+Add an option to export the DQ scan results to a specifc BQ table that will automatically be created in the same BQ dataset.
+To add log based alerts, we can create a failed/success scan metrics to filter all the failed/success events sent by Dataplex service.
+For Email Alerts, we can add a notification channel with the email id and create an alert policy to listen the failed or success scan metrics and link the notification channel to it.
+To create Pub/Sub based alerts by creating a Topic and a Subscription and add a notification channel for the Topic.
+Now we can create an alert policy to listen the failed or success scan metrics and link the Pub/Sub notification channel to it.
+We do need to provide GCP Service Account(service-<GCPProjectNumber>@gcp-sa-monitoring-notification.iam.gserviceaccount.com) "roles/pubsub.publisher" to publish the events in the Pub/Sub topic.
+
+
+
 This module manages the creation of Dataplex DataScan resources.
 
 <!-- BEGIN TOC -->
